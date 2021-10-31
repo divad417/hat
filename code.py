@@ -1,5 +1,5 @@
 import hat
-from color_match import ColorMatch
+from games import ColorMatch
 from menu import Menu
 
 menu = Menu(hat)

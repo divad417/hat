@@ -1,4 +1,4 @@
-# Tophat Game Platform
+# Top Hat Game Platform
 
 This repository contains circuitpython code to run on an interactive area style tophat I made for holoween. The target hardware is all from Adafruit and includes:
 
