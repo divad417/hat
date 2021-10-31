@@ -1,0 +1,7 @@
+circuitpython
+adafruit_hx8357
+adafruit_neokey
+adafruit_stmpe610
+adafruit_display_text
+adafruit_display_shapes
+adafruit_bitmap_font
