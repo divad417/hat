@@ -9,4 +9,3 @@ menu.add_game(game)
 while True:
     game = menu.show()
     game.play()
-

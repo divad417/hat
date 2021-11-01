@@ -53,21 +53,27 @@ class Menu:
                 self.backlight.value = enabled
                 time.sleep(0.2)
                 self.empty_touch_buffer()
+                if not enabled:
+                    self.leds.fill(0)
+                    self.leds.show()
 
             if enabled:
-                self.leds[idx] = rainbowio.colorwheel(color)
-                self.leds[idx+9] = rainbowio.colorwheel(color)
-                self.leds.show()
+                peak = 50
+                for i in range(0, peak+1, 5):
+                    self.leds[idx] = (peak-i**1, 0, 0, 0) # rainbowio.colorwheel(color)
+                    self.leds[(idx+1)%9] = (peak, 0, 0)
+                    self.leds[(idx+2)%9] = (i**1, 0, 0) # rainbowio.colorwheel(color)
 
-                time.sleep(0.05)
-
-                self.leds[idx] = 0
-                self.leds[idx+9] = 0
-                self.leds.show()
+                    self.leds[(idx+9)] = (peak-i**1, 0, 0)
+                    self.leds[(idx+1)%9+9] = (peak, 0, 0)
+                    self.leds[(idx+2)%9+9] = (i**1, 0, 0)
+                    self.leds.show()
+                    time.sleep(0.008)
 
                 idx = (idx + 1) % 9
                 color = (color + 1) % 256
         self.leds.fill(0)
+        self.leds.show()
         self.backlight.value = True
 
         return self.game
