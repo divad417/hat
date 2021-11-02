@@ -2,8 +2,10 @@ import board
 import digitalio
 import displayio
 import neopixel
+import storage
 from adafruit_hx8357 import HX8357
 from adafruit_neokey.neokey1x4 import NeoKey1x4
+import adafruit_sdcard
 from adafruit_stmpe610 import Adafruit_STMPE610_SPI
 
 auto_refresh = False
@@ -13,7 +15,7 @@ displayio.release_displays()
 spi = board.SPI()
 i2c = board.I2C()
 
-sd_cs = board.D5
+sd_cs = digitalio.DigitalInOut(board.D5)
 touch_cs = digitalio.DigitalInOut(board.D6)
 led_pin = board.D12
 led_n = 18
@@ -42,6 +44,12 @@ for keypad in keypads:
 leds = neopixel.NeoPixel(board.D12, led_n, pixel_order=neopixel.GRBW, auto_write=auto_refresh)
 leds.brightness = 0.1
 leds.fill(0)
+
+# SD Card
+sd_root = '/sd'
+sdcard = adafruit_sdcard.SDCard(spi, sd_cs)
+vfs = storage.VfsFat(sdcard)
+storage.mount(vfs, sd_root)
 
 def refresh():
     """Update all outputs, for use when auto_refresh is False."""
