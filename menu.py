@@ -26,8 +26,10 @@ class Menu:
         self.group.append(label)
         hat.splash.append(self.group)
 
+        self.games = []
+
     def add_game(self, game):
-        self.game = game
+        self.games.append(game)
 
     def empty_touch_buffer(self):
         while not self.touch.buffer_empty:
@@ -58,15 +60,17 @@ class Menu:
                     self.leds.show()
 
             if enabled:
-                peak = 50
-                for i in range(0, peak+1, 5):
-                    self.leds[idx] = (peak-i**1, 0, 0, 0) # rainbowio.colorwheel(color)
-                    self.leds[(idx+1)%9] = (peak, 0, 0)
-                    self.leds[(idx+2)%9] = (i**1, 0, 0) # rainbowio.colorwheel(color)
+                peak = 32
+                for i in range(0, peak+1, 2):
+                    self.leds[idx] = (peak-i, 0, 0, 0) # rainbowio.colorwheel(color)
+                    self.leds[(idx+1)%9] = (2*peak-i, 0, 0)
+                    self.leds[(idx+2)%9] = (i+peak, 0, 0)
+                    self.leds[(idx+3)%9] = (i, 0, 0) # rainbowio.colorwheel(color)
 
-                    self.leds[(idx+9)] = (peak-i**1, 0, 0)
-                    self.leds[(idx+1)%9+9] = (peak, 0, 0)
-                    self.leds[(idx+2)%9+9] = (i**1, 0, 0)
+                    self.leds[(idx+9)] = (peak-i, 0, 0)
+                    self.leds[(idx+1)%9+9] = (2*peak-i, 0, 0)
+                    self.leds[(idx+2)%9+9] = (i+peak, 0, 0)
+                    self.leds[(idx+3)%9+9] = (i, 0, 0)
                     self.leds.show()
                     time.sleep(0.008)
 
@@ -76,4 +80,4 @@ class Menu:
         self.leds.show()
         self.backlight.value = True
 
-        return self.game
+        return self.games[0]
